@@ -1,0 +1,13 @@
+﻿<Properties StartupItem="iOS/FruityFalls.Forms.iOS.csproj">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FruityFalls.Forms/Entities/Fruit.cs">
+    <Files>
+      <File FileName="FruityFalls.Forms/Entities/Fruit.cs" Line="31" Column="13" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.FruityFalls.Forms.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.51D0D88B-3B0C-4864-8E65-CB103FBD2268" />
+</Properties>
