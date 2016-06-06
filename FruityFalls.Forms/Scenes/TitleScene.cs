@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GameScene.cs" company="ArcTouch, Inc.">
+// <copyright file="TitleScene.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,40 +10,36 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the GameScene type.
+//   Defines the TitleScene type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using CocosSharp;
+using FruityFalls.Forms.Common;
+using FruityFalls.Forms.Entities;
 
 namespace FruityFalls.Forms.Scenes
 {
-    using System;
-    using System.Collections.Generic;
-    using CocosSharp;
-    using FruityFalls.Forms.Common;
-    using FruityFalls.Forms.Entities;
-
-    public class GameScene : CCScene
+    public class TitleScene : CCScene
     {
         private CCLayer backgroundLayer;
-        private CCLayer gameplayLayer;
-        private CCLayer foreGroundLayer;
+        private CCLayer fruitLayer;
 
         private List<Fruit> fruitList;
 
-        public GameScene(CCGameView gameView) : base(gameView)
+        public TitleScene(CCGameView titleView) : base(titleView)
         {
             CreateBackground();
 
-            CreateForeground();
-            
-            CreateGameplay();
+            fruitLayer = new CCLayer();
 
             AddLayersToScene();
 
             CreatePaddle();
 
             CreateFruit();
-            
+
             Schedule(GameLoop);
         }
 
@@ -57,31 +53,9 @@ namespace FruityFalls.Forms.Scenes
             backgroundLayer.AddChild(background);
         }
 
-        private void CreateForeground()
-        {
-            var foreground = new CCSprite(Images.FOREGROUND);
-            foreground.AnchorPoint = new CCPoint(0, 0);
-            foreground.IsAntialiased = false;
-
-            #if DEBUG
-            if (Coefficients.ShowCollisionAreas)
-            {
-                foreground.Opacity = 100;
-            }
-            #endif
-
-            foreGroundLayer = new CCLayer();
-            foreGroundLayer.AddChild(foreground);
-        }
-
-        private void CreateGameplay()
-        {
-            gameplayLayer = new CCLayer();
-        }
-
         private void CreatePaddle()
         {
-            
+
         }
 
         private void CreateFruit()
@@ -89,18 +63,17 @@ namespace FruityFalls.Forms.Scenes
             fruitList = new List<Fruit>();
             var fruit = new Fruit();
 
-            fruit.PositionX = CCRandom.GetRandomFloat(0 + (fruit.Radius * 1.5f), gameplayLayer.ContentSize.Width - (fruit.Radius * 1.5f));
-            fruit.PositionY = gameplayLayer.ContentSize.Height + fruit.Radius;
+            fruit.PositionX = CCRandom.GetRandomFloat(0 + (fruit.Radius * 1.5f), fruitLayer.ContentSize.Width - (fruit.Radius * 1.5f));
+            fruit.PositionY = fruitLayer.ContentSize.Height + fruit.Radius;
 
             fruitList.Add(fruit);
-            gameplayLayer.AddChild(fruit);
+            fruitLayer.AddChild(fruit);
         }
 
         private void AddLayersToScene()
         {
             this.AddLayer(backgroundLayer);
-            this.AddLayer(gameplayLayer);
-            this.AddLayer(foreGroundLayer);
+            this.AddLayer(fruitLayer);
         }
 
         private void GameLoop(float frameTimeInSeconds)

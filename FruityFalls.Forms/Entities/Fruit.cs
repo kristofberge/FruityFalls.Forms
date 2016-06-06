@@ -16,25 +16,48 @@
 
 namespace FruityFalls.Forms.Entities
 {
-    using System;
     using CocosSharp;
+
     using FruityFalls.Forms.Common;
+    using FruityFalls.Forms.Geometry;
+    using FruityFalls.Forms.Physics;
 
     public class Fruit : CCNode
     {
         private CCSprite graphic;
         private CCDrawNode debugGraphic;
 
-        public Fruit()
+        private IPositionCalculator positionCalculator;
+
+        public Fruit(IPositionCalculator positionCalculator)
         {
+            this.positionCalculator = positionCalculator;
+
             CreateGraphic();
 
-            if (Coefficients.ShowCollisionAreas)
+            if (Coefficients.ShowCollisionAreas) 
             {
                 CreateDebugGraphic();
             }
 
             CreateHitBox();
+        }
+
+        public Circle Collision { get; private set; }
+
+
+
+        public void Activity(float frameTimeInSeconds)
+        {
+            Velocity += Acceleration * frameTimeInSeconds;
+            this.Position += Velocity * frameTimeInSeconds;
+
+            this.Position = positionCalculator.GetNewPosition(frameTimeInSeconds);
+        }
+
+        public float Radius 
+        {
+            get { return Coefficients.FruitRadius; }
         }
 
         private void CreateGraphic()
@@ -49,10 +72,12 @@ namespace FruityFalls.Forms.Entities
             debugGraphic = new CCDrawNode();
             this.AddChild(debugGraphic);
         }
-        
-        void CreateHitBox()
+
+        private void CreateHitBox()
         {
-            throw new NotImplementedException();
+            Collision = new Circle();
+            Collision.Radius = Coefficients.FruitRadius;
+            this.AddChild(Collision);
         }
     }
 }

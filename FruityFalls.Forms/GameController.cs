@@ -16,6 +16,7 @@
 
 namespace FruityFalls.Forms
 {
+    using System;
     using System.Collections.Generic;
 
     using CocosSharp;
@@ -24,18 +25,28 @@ namespace FruityFalls.Forms
 
     public static class GameController
     {
-        public static CCGameView GameView { get; private set; }
+        public static void InitializeGame(CCGameView gameView)
+        {
+            Initialize(gameView);
+            var gameScene = new  GameScene(gameView);
+            gameView.RunWithScene(gameScene);
+        }
+
+        public static void InitializeTitle(CCGameView gameView)
+        {
+            Initialize(gameView);
+            var titleScene = new TitleScene(gameView);
+            gameView.RunWithScene(titleScene);
+        }
 
         public static void Initialize(CCGameView gameView)
         {
-            GameView = gameView;
+            gameView.ContentManager.SearchPaths = new List<string> { "Images" };
 
-            GameView.ContentManager.SearchPaths = new List<string> { "Images" };
+            gameView.DesignResolution = new CCSizeI(Constants.DESIGN_WIDTH, Constants.DESIGN_HEIGHT);
 
-            GameView.DesignResolution = new CCSizeI(Constants.DESIGN_WIDTH, Constants.DESIGN_HEIGHT);
 
-            var scene = new GameScene(GameView);
-            GameView.RunWithScene(scene);
         }
-    }
+
+   }
 }

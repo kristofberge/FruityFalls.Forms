@@ -44,6 +44,10 @@
     <Compile Include="Common\Images.cs" />
     <Compile Include="Common\Coefficients.cs" />
     <Compile Include="Entities\Fruit.cs" />
+    <Compile Include="Geometry\Circle.cs" />
+    <Compile Include="Scenes\TitleScene.cs" />
+    <Compile Include="Physics\IPositionCalculator.cs" />
+    <Compile Include="Physics\LinearSpeedPositionCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CocosSharp.Forms">
@@ -77,6 +81,8 @@
     <Folder Include="Scenes\" />
     <Folder Include="Common\" />
     <Folder Include="Entities\" />
+    <Folder Include="Geometry\" />
+    <Folder Include="Physics\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\MainPage.xaml">

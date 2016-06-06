@@ -15,7 +15,10 @@
 //  --------------------------------------------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
+using CocosSharp;
+using FruityFalls.Forms.Common;
+using FruityFalls.Forms.Scenes;
 using Xamarin.Forms;
 
 namespace FruityFalls.Forms.Pages
@@ -27,11 +30,52 @@ namespace FruityFalls.Forms.Pages
             InitializeComponent();
 
             NavigationPage.SetHasNavigationBar(this, false);
+
+            CocosSharpView background = CreateBackground();
+            Button startButton = CreateStartButton();
+
+            outerLayout.Children.Add(background);
+            outerLayout.Children.Add(startButton);
         }
 
-        private async void NavigateToGamePage(object sender, EventArgs e)
+        private CocosSharpView CreateBackground()
         {
-            await Navigation.PushAsync(new GamePage());
+            var background = new CocosSharpView
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            background.ViewCreated = OnViewCreated;
+
+            AbsoluteLayout.SetLayoutBounds(background, new Rectangle(0, 0, 1, 1));
+            AbsoluteLayout.SetLayoutFlags(background, AbsoluteLayoutFlags.All);
+
+            return background;
+        }
+
+        private Button CreateStartButton()
+        {
+            Color bgColor = Color.FromRgba(255, 255, 255, 0.5);
+            var button = new Button
+            {
+                Text = "START",
+                TextColor = Color.Red,
+                FontAttributes = FontAttributes.Bold,
+                FontSize = 30,
+                BackgroundColor = bgColor,
+                BorderColor = Color.Aqua,
+                Command = new Command(() => Application.Current.MainPage = new GamePage())
+            };
+
+            AbsoluteLayout.SetLayoutBounds(button, new Rectangle(0.5, 0.5, 0.5, 50));
+            AbsoluteLayout.SetLayoutFlags(button, AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.WidthProportional);
+
+            return button;
+        }
+
+        private void OnViewCreated(object sender, EventArgs e)
+        {
+            GameController.InitializeTitle(sender as CCGameView);
         }
     }
 }

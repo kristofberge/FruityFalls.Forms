@@ -1,7 +1,21 @@
 ﻿<Properties StartupItem="iOS/FruityFalls.Forms.iOS.csproj">
-  <MonoDevelop.Ide.Workbench ActiveDocument="FruityFalls.Forms/Entities/Fruit.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FruityFalls.Forms/Physics/LinearSpeedPositionCalculator.cs">
     <Files>
-      <File FileName="FruityFalls.Forms/Entities/Fruit.cs" Line="31" Column="13" />
+      <File FileName="FruityFalls.Forms/Entities/Fruit.cs" Line="43" Column="28" />
+      <File FileName="FruityFalls.Forms/Geometry/Circle.cs" Line="20" Column="5" />
+      <File FileName="FruityFalls.Forms/Common/Coefficients.cs" Line="21" Column="53" />
+      <File FileName="FruityFalls.Forms/Pages/GamePage.xaml.cs" Line="41" Column="51" />
+      <File FileName="FruityFalls.Forms/Scenes/GameScene.cs" Line="112" Column="10" />
+      <File FileName="FruityFalls.Forms/Scenes/TitleScene.cs" Line="56" Column="36" />
+      <File FileName="FruityFalls.Forms/PageModels/GamePageModel.cs" Line="1" Column="1" />
+      <File FileName="FruityFalls.Forms/Pages/MainPage.xaml.cs" Line="64" Column="31" />
+      <File FileName="FruityFalls.Forms/Pages/MainPage.xaml" Line="6" Column="40" />
+      <File FileName="FruityFalls.Forms/GameController.cs" Line="32" Column="44" />
+      <File FileName="FruityFalls.Forms/obj/Debug/FruityFalls.Forms.Pages.MainPage.xaml.g.cs" Line="24" Column="1" />
+      <File FileName="FruityFalls.Forms/Common/Constants.cs" Line="21" Column="44" />
+      <File FileName="FruityFalls.Forms/Pages/GamePage.xaml" Line="1" Column="1" />
+      <File FileName="FruityFalls.Forms/Physics/IPositionCalculator.cs" Line="22" Column="17" />
+      <File FileName="FruityFalls.Forms/Physics/LinearSpeedPositionCalculator.cs" Line="28" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

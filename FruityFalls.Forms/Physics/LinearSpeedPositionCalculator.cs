@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Coefficients.cs" company="ArcTouch, Inc.">
+// <copyright file="LinearSpeedPositionCalculator.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,17 +10,28 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the Coefficients type.
+//   Defines the LinearSpeedPositionCalculator type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 using System;
-namespace FruityFalls.Forms.Common
-{
-    public static class Coefficients
-    {
-        public const bool ShowCollisionAreas = false;
-        public const float Gravity = -60;
+using CocosSharp;
+using FruityFalls.Forms.Common;
 
-        public const float FruitRadius = 16;
+namespace FruityFalls.Forms.Physics
+{
+    public class LinearSpeedPositionCalculator : IPositionCalculator
+    {
+        public CCPoint Velocity { get; private set; }
+
+        public LinearSpeedPositionCalculator()
+        {
+            Velocity = new CCPoint(0, Coefficients.Gravity);
+        }
+
+        public CCPoint GetNewPosition(float frameTimeInSeconds)
+        {
+            return Velocity * frameTimeInSeconds;
+        }
     }
 }
+

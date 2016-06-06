@@ -23,8 +23,6 @@ namespace FruityFalls.Forms.Pages
 
     public partial class GamePage : ContentPage
     {
-        GameScene gameScene;
-
         public GamePage()
         {
             InitializeComponent();
@@ -45,7 +43,7 @@ namespace FruityFalls.Forms.Pages
 
         private void OnViewCreated(object sender, EventArgs e)
         {
-            GameController.Initialize(sender as CCGameView);
+            GameController.InitializeGame(sender as CCGameView);
         }
     }
 }

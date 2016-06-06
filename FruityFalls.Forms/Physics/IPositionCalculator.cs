@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Coefficients.cs" company="ArcTouch, Inc.">
+// <copyright file="IPositionCalculator.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,17 +10,15 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the Coefficients type.
+//   Defines the IPositionCalculator type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using System;
-namespace FruityFalls.Forms.Common
-{
-    public static class Coefficients
-    {
-        public const bool ShowCollisionAreas = false;
-        public const float Gravity = -60;
+using CocosSharp;
 
-        public const float FruitRadius = 16;
+namespace FruityFalls.Forms.Physics
+{
+    public interface IPositionCalculator
+    {
+        CCPoint GetNewPosition(float frameTimeInSeconds);
     }
 }

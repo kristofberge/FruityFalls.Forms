@@ -3,12 +3,5 @@
 	xmlns ="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="FruityFalls.Forms.Pages.MainPage">
-	<StackLayout>
-		<Button 
-			Text="START"
-			TextColor="Red"
-			FontSize="30"
-			Clicked="NavigateToGamePage"
-			VerticalOptions="CenterAndExpand"/>
-	</StackLayout>
+	<AbsoluteLayout x:Name="outerLayout"/>
 </ContentPage>

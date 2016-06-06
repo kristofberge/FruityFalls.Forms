@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Coefficients.cs" company="ArcTouch, Inc.">
+// <copyright file="Circle.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,17 +10,27 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the Coefficients type.
+//   Defines the Circle type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using System;
-namespace FruityFalls.Forms.Common
-{
-    public static class Coefficients
-    {
-        public const bool ShowCollisionAreas = false;
-        public const float Gravity = -60;
 
-        public const float FruitRadius = 16;
+namespace FruityFalls.Forms.Geometry
+{
+    using CocosSharp;
+
+    public class Circle : CCNode
+    {
+        public float Radius { get; set; }
+
+        public bool IsPointInside(CCPoint point)
+        {
+            CCPoint absolutePosition = this.PositionWorldspace;
+
+            float horizontalSide = point.X - absolutePosition.X;
+            float verticalSide = point.Y - absolutePosition.Y;
+            float distanceFromMiddle = (horizontalSide * horizontalSide) + (verticalSide * verticalSide);
+
+            return distanceFromMiddle < Radius;
+        }
     }
 }
