@@ -2,6 +2,55 @@
 <ContentPage
 	xmlns ="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:FruityFalls.Forms.Views;assembly=FruityFalls.Forms"
+	xmlns:pageModels="clr-namespace:FruityFalls.Forms.PageModels;assembly=FruityFalls.Forms"
+	xmlns:enum="clr-namespace:FruityFalls.Forms.Common.Enums;assembly=FruityFalls.Forms"
 	x:Class="FruityFalls.Forms.Pages.MainPage">
-	<AbsoluteLayout x:Name="outerLayout"/>
+
+	<ContentPage.Resources>
+        <ResourceDictionary>
+			<Style x:Key="StandardButton" TargetType="Button">
+                <Setter Property="TextColor" Value="Red"/>
+				<Setter Property="FontAttributes" Value="Bold"/>
+				<Setter Property="FontSize" Value="30"/>
+				<Setter Property="BackgroundColor" Value="#383050"/>
+				<Setter Property="BorderColor" Value="Aqua"/>
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <pageModels:MainPageModel/>
+	</ContentPage.BindingContext>
+	
+	<AbsoluteLayout x:Name="outerLayout">
+        <custom:TitleBackgroundView
+			FruitType="{Binding SelectedFruitType}"
+			AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+			AbsoluteLayout.LayoutFlags="All"/>
+
+		<Button
+			Style="{StaticResource StandardButton}"
+			Text="START"
+			Command="{Binding StartCommand}"/>
+
+		<StackLayout Orientation="Horizontal">
+			<Button
+                Style="{StaticResource StandardButton}"
+                Text="Cherry"
+                Command="{Binding SetFruitTypeCommand}"
+				CommandParameter="{enum:FruitType Cherry}"/>
+			<Button
+                Style="{StaticResource StandardButton}"
+                Text="Lemon"
+                Command="{Binding SetFruitTypeCommand}"
+				CommandParameter="{enum:FruitType Lemon}"/>
+			<Button
+                Style="{StaticResource StandardButton}"
+                Text="Random"
+                Command="{Binding SetFruitTypeCommand}"
+				CommandParameter="{enum:FruitType Random}"/>
+		</StackLayout>
+		
+	</AbsoluteLayout>
 </ContentPage>

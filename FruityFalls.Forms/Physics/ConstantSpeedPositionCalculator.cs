@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Images.cs" company="ArcTouch, Inc.">
+// <copyright file="LinearSpeedPositionCalculator.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,17 +10,26 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the Images type.
+//   Defines the LinearSpeedPositionCalculator type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
-namespace FruityFalls.Forms.Common
+namespace FruityFalls.Forms.Physics
 {
-    public static class Images
+    using CocosSharp;
+
+    public class ConstantSpeedPositionCalculator : IPositionCalculator
     {
-        public const string BACKGROUND = "background";
-        public const string FOREGROUND = "foreground";
-        public const string CHERRY = "cherry";
-        public const string LEMON = "lemon";
+        public ConstantSpeedPositionCalculator(float gravity)
+        {
+            Velocity = new CCPoint(0, gravity);
+        }
+
+        public CCPoint Velocity { get; set; }
+        
+        public CCPoint GetNewPosition(float frameTimeInSeconds, CCPoint currentPosition)
+        {
+            return currentPosition += Velocity * frameTimeInSeconds;
+        }
     }
 }

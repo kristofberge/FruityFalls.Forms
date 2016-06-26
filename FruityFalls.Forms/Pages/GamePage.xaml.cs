@@ -43,7 +43,7 @@ namespace FruityFalls.Forms.Pages
 
         private void OnViewCreated(object sender, EventArgs e)
         {
-            GameController.InitializeGame(sender as CCGameView);
+            GameController.Initialize<GameScene>(sender as CCGameView, gameView => new GameScene(gameView));
         }
     }
 }

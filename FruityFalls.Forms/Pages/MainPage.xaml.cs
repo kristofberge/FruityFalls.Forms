@@ -13,59 +13,39 @@
 //   Defines the MainPage.xaml type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CocosSharp;
-using FruityFalls.Forms.Common;
-using FruityFalls.Forms.Scenes;
-using Xamarin.Forms;
 
 namespace FruityFalls.Forms.Pages
 {
+    using System;
+    using FruityFalls.Forms.Common.Enums;
+    using FruityFalls.Forms.PageModels;
+
+    using Xamarin.Forms;
+
     public partial class MainPage : ContentPage
     {
+        public MainPageModel pageModel { get { return BindingContext as MainPageModel; } }
+
         public MainPage ()
         {
             InitializeComponent();
 
             NavigationPage.SetHasNavigationBar(this, false);
 
-            CocosSharpView background = CreateBackground();
+            this.BindingContext = new MainPageModel();
+
             Button startButton = CreateStartButton();
 
-            outerLayout.Children.Add(background);
+            StackLayout buttonsLayout = CreateButtonsLayout();
+
             outerLayout.Children.Add(startButton);
-        }
-
-        private CocosSharpView CreateBackground()
-        {
-            var background = new CocosSharpView
-            {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
-            };
-            background.ViewCreated = OnViewCreated;
-
-            AbsoluteLayout.SetLayoutBounds(background, new Rectangle(0, 0, 1, 1));
-            AbsoluteLayout.SetLayoutFlags(background, AbsoluteLayoutFlags.All);
-
-            return background;
+            outerLayout.Children.Add(buttonsLayout);
         }
 
         private Button CreateStartButton()
         {
-            Color bgColor = Color.FromRgba(255, 255, 255, 0.5);
-            var button = new Button
-            {
-                Text = "START",
-                TextColor = Color.Red,
-                FontAttributes = FontAttributes.Bold,
-                FontSize = 30,
-                BackgroundColor = bgColor,
-                BorderColor = Color.Aqua,
-                Command = new Command(() => Application.Current.MainPage = new GamePage())
-            };
+            Button button = CreateStandardButton("START");
+            button.Command = new Command(() => Application.Current.MainPage = new GamePage());
 
             AbsoluteLayout.SetLayoutBounds(button, new Rectangle(0.5, 0.5, 0.5, 50));
             AbsoluteLayout.SetLayoutFlags(button, AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.WidthProportional);
@@ -73,9 +53,47 @@ namespace FruityFalls.Forms.Pages
             return button;
         }
 
-        private void OnViewCreated(object sender, EventArgs e)
+        private StackLayout CreateButtonsLayout()
         {
-            GameController.InitializeTitle(sender as CCGameView);
+            var layout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal
+            };
+            AbsoluteLayout.SetLayoutBounds(layout, new Rectangle(0, 1, 1, 70));
+            AbsoluteLayout.SetLayoutFlags(layout, AbsoluteLayoutFlags.PositionProportional | AbsoluteLayoutFlags.WidthProportional);
+
+            Button cherryButton = CreateStandardButton("Cherry");
+            Button lemonButton = CreateStandardButton("Lemon");
+            Button randomButton = CreateStandardButton("Random");
+
+            cherryButton.SetBinding(Button.CommandProperty, "SetFruitTypeCommand");
+            cherryButton.SetValue(Button.CommandParameterProperty, FruitType.Cherry);
+
+            lemonButton.SetBinding(Button.CommandProperty, "SetFruitTypeCommand");
+            lemonButton.SetValue(Button.CommandParameterProperty, FruitType.Lemon);
+
+            randomButton.SetBinding(Button.CommandProperty, "SetFruitTypeCommand");
+            randomButton.SetValue(Button.CommandParameterProperty, FruitType.Random);
+
+            layout.Children.Add(cherryButton);
+            layout.Children.Add(lemonButton);
+            layout.Children.Add(randomButton);
+
+            return layout;
+        }
+
+        static Button CreateStandardButton(string text)
+        {
+            Color bgColor = Color.FromRgba(255, 255, 255, 0.5);
+            return new Button
+            {
+                Text = text,
+                TextColor = Color.Red,
+                FontAttributes = FontAttributes.Bold,
+                FontSize = 30,
+                BackgroundColor = bgColor,
+                BorderColor = Color.Aqua
+            };
         }
     }
 }

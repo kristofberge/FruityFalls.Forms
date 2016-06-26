@@ -22,5 +22,9 @@ namespace FruityFalls.Forms.Common
         public const float Gravity = -60;
 
         public const float FruitRadius = 16;
+
+        public const float StartingFruitPerSecond = .5f;
+
+        public const float FruitPerSecondTitleScreen = 3;
     }
 }

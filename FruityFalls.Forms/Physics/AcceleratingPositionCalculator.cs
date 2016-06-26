@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LinearSpeedPositionCalculator.cs" company="ArcTouch, Inc.">
+// <copyright file="AcceleratingPositionCalculator.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,28 +10,30 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the LinearSpeedPositionCalculator type.
+//   Defines the AcceleratingPositionCalculator type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using System;
-using CocosSharp;
-using FruityFalls.Forms.Common;
 
 namespace FruityFalls.Forms.Physics
 {
-    public class LinearSpeedPositionCalculator : IPositionCalculator
-    {
-        public CCPoint Velocity { get; private set; }
+    using CocosSharp;
 
-        public LinearSpeedPositionCalculator()
+    public class AcceleratingPositionCalculator : IPositionCalculator
+    {
+        public CCPoint Velocity { get; set; }
+
+        public CCPoint Acceleration { get; set; }
+
+        public AcceleratingPositionCalculator(float acceleration, float initialVelocity)
         {
-            Velocity = new CCPoint(0, Coefficients.Gravity);
+            Acceleration = new CCPoint(0, acceleration);
+            Velocity = new CCPoint(0, initialVelocity);
         }
 
-        public CCPoint GetNewPosition(float frameTimeInSeconds)
+        public CCPoint GetNewPosition(float frameTimeInSeconds, CCPoint currentPosition)
         {
-            return Velocity * frameTimeInSeconds;
+            Velocity += Acceleration * frameTimeInSeconds;
+            return currentPosition += Velocity * frameTimeInSeconds;
         }
     }
 }
-

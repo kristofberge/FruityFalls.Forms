@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MainPageModel.cs" company="ArcTouch, Inc.">
+// <copyright file="FruitType.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,17 +10,16 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the MainPageModel type.
+//   Defines the FruitType type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using System;
-namespace FruityFalls.Forms.PageModels
+
+namespace FruityFalls.Forms.Common.Enums
 {
-    public class GamePageModel
+    using System;
+
+    public enum FruitType
     {
-        public GamePageModel()
-        {
-            
-        }
+        Cherry, Lemon, Random
     }
 }

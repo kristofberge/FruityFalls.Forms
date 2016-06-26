@@ -16,9 +16,11 @@
 
 namespace FruityFalls.Forms.Entities
 {
+    using System;
     using CocosSharp;
 
     using FruityFalls.Forms.Common;
+    using FruityFalls.Forms.Common.Enums;
     using FruityFalls.Forms.Geometry;
     using FruityFalls.Forms.Physics;
 
@@ -29,42 +31,53 @@ namespace FruityFalls.Forms.Entities
 
         private IPositionCalculator positionCalculator;
 
-        public Fruit(IPositionCalculator positionCalculator)
+        public Fruit(FruitType type, IPositionCalculator positionCalculator)
         {
             this.positionCalculator = positionCalculator;
 
-            CreateGraphic();
+            SetType(type);
 
-            if (Coefficients.ShowCollisionAreas) 
-            {
-                CreateDebugGraphic();
-            }
+            CreateGraphic();
 
             CreateHitBox();
         }
 
         public Circle Collision { get; private set; }
 
-
+        public FruitType Type { get; private set; }
 
         public void Activity(float frameTimeInSeconds)
         {
-            Velocity += Acceleration * frameTimeInSeconds;
-            this.Position += Velocity * frameTimeInSeconds;
-
-            this.Position = positionCalculator.GetNewPosition(frameTimeInSeconds);
+            this.Position = positionCalculator.GetNewPosition(frameTimeInSeconds, this.Position);
         }
 
-        public float Radius 
+        private void SetType(FruitType type)
         {
-            get { return Coefficients.FruitRadius; }
+            if (type == FruitType.Random)
+            {
+                int rand = CCRandom.GetRandomInt(0, 1);
+                Type = rand == 0 ? FruitType.Cherry : FruitType.Lemon;
+            }
+            else
+            {
+                Type = type;
+            }
         }
 
         private void CreateGraphic()
         {
-            this.graphic = new CCSprite(Images.CHERRY);
-            this.graphic.IsAntialiased = true;
-            this.AddChild(graphic);
+            string image = Type == FruitType.Cherry ? Images.CHERRY : Images.LEMON;
+
+            if (!string.IsNullOrEmpty(image))
+            {
+                this.graphic = new CCSprite(image);
+                this.graphic.IsAntialiased = true;
+                this.AddChild(graphic);
+            }
+            else
+            {
+                throw new ArgumentException($"Invalid FruitType: {Type}");
+            }
         }
 
         private void CreateDebugGraphic()

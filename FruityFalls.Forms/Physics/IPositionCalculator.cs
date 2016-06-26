@@ -19,6 +19,8 @@ namespace FruityFalls.Forms.Physics
 {
     public interface IPositionCalculator
     {
-        CCPoint GetNewPosition(float frameTimeInSeconds);
+        CCPoint Velocity { get; set; }
+
+        CCPoint GetNewPosition(float frameTimeInSeconds, CCPoint currentPosition);
     }
 }

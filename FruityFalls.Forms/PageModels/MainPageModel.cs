@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Images.cs" company="ArcTouch, Inc.">
+// <copyright file="MainPageModel.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,17 +10,30 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the Images type.
+//   Defines the MainPageModel type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
+using System;
+using FruityFalls.Forms.Common.Enums;
+using Xamarin.Forms;
 
-namespace FruityFalls.Forms.Common
+namespace FruityFalls.Forms.PageModels
 {
-    public static class Images
+    [PropertyChanged.ImplementPropertyChanged]
+    public class MainPageModel
     {
-        public const string BACKGROUND = "background";
-        public const string FOREGROUND = "foreground";
-        public const string CHERRY = "cherry";
-        public const string LEMON = "lemon";
+        public MainPageModel()
+        {
+            SetFruitTypeCommand = new Command<FruitType>(SetFruitType);
+        }
+
+        public FruitType SelectedFruitType { get; set; }
+
+        public Command<FruitType> SetFruitTypeCommand { get; set; }
+
+        private void SetFruitType(FruitType type)
+        {
+            SelectedFruitType = type;
+        }
     }
 }

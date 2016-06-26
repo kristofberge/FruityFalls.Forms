@@ -13,34 +13,46 @@
 //   Defines the TitleScene type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
-using CocosSharp;
-using FruityFalls.Forms.Common;
-using FruityFalls.Forms.Entities;
 
 namespace FruityFalls.Forms.Scenes
 {
+    using System.Collections.Generic;
+
+    using CocosSharp;
+
+    using FruityFalls.Forms.Common;
+    using FruityFalls.Forms.Common.Enums;
+    using FruityFalls.Forms.Entities;
+    using FruityFalls.Forms.Utils;
+
     public class TitleScene : CCScene
     {
         private CCLayer backgroundLayer;
         private CCLayer fruitLayer;
 
-        private List<Fruit> fruitList;
+        private List<Fruit> fruitList = new List<Fruit>();
+        private FruitSpawner spawner;
 
         public TitleScene(CCGameView titleView) : base(titleView)
         {
-            CreateBackground();
-
-            fruitLayer = new CCLayer();
-
             AddLayersToScene();
 
-            CreatePaddle();
-
-            CreateFruit();
+            CreateBackground();
+            
+            CreateFruitSpawner();
 
             Schedule(GameLoop);
+        }
+
+        public FruitType FruitType { get; set; } = FruitType.Random;
+
+        private void AddLayersToScene()
+        {
+            backgroundLayer = new CCLayer();
+            fruitLayer = new CCLayer();
+
+            this.AddLayer(backgroundLayer);
+            this.AddLayer(fruitLayer);
         }
 
         private void CreateBackground()
@@ -49,31 +61,20 @@ namespace FruityFalls.Forms.Scenes
             background.AnchorPoint = new CCPoint(0, 0);
             background.IsAntialiased = false;
 
-            backgroundLayer = new CCLayer();
             backgroundLayer.AddChild(background);
         }
 
-        private void CreatePaddle()
+        private void CreateFruitSpawner()
         {
-
+            float timeBetweenSpawns = 1 / Coefficients.FruitPerSecondTitleScreen;
+            this.spawner = new FruitSpawner(timeBetweenSpawns, () => FruitFactory.CreateTitleFruit(fruitLayer, FruitType));
+            spawner.FruitSpawned += OnFruitSpawned;
         }
-
-        private void CreateFruit()
+        
+        private void OnFruitSpawned(object sender, Fruit fruit)
         {
-            fruitList = new List<Fruit>();
-            var fruit = new Fruit();
-
-            fruit.PositionX = CCRandom.GetRandomFloat(0 + (fruit.Radius * 1.5f), fruitLayer.ContentSize.Width - (fruit.Radius * 1.5f));
-            fruit.PositionY = fruitLayer.ContentSize.Height + fruit.Radius;
-
-            fruitList.Add(fruit);
-            fruitLayer.AddChild(fruit);
-        }
-
-        private void AddLayersToScene()
-        {
-            this.AddLayer(backgroundLayer);
-            this.AddLayer(fruitLayer);
+            this.fruitList.Add(fruit);
+            this.fruitLayer.AddChild(fruit);
         }
 
         private void GameLoop(float frameTimeInSeconds)
@@ -82,6 +83,15 @@ namespace FruityFalls.Forms.Scenes
             {
                 fruit.Activity(frameTimeInSeconds);
             }
+
+            fruitList.RemoveAll(IsUnderBottomOfScene);
+
+            spawner.Activity(frameTimeInSeconds);
         }
-    }
+
+        private bool IsUnderBottomOfScene(Fruit fruit)
+        {
+            return fruit.PositionY < -Coefficients.FruitRadius;
+        }
+   }
 }

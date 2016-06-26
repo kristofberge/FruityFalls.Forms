@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Images.cs" company="ArcTouch, Inc.">
+// <copyright file="IncreasingFruitSpawner.cs" company="ArcTouch, Inc.">
 //   All rights reserved.
 //
 //   This file, its contents, concepts, methods, behavior, and operation
@@ -10,17 +10,20 @@
 //   the license agreement.
 // </copyright>
 // <summary>
-//   Defines the Images type.
+//   Defines the IncreasingFruitSpawner type.
 // </summary>
 //  --------------------------------------------------------------------------------------------------------------------
 
-namespace FruityFalls.Forms.Common
+namespace FruityFalls.Forms.Entities
 {
-    public static class Images
+    using System;
+
+    public class IncreasingFruitSpawner : FruitSpawner
     {
-        public const string BACKGROUND = "background";
-        public const string FOREGROUND = "foreground";
-        public const string CHERRY = "cherry";
-        public const string LEMON = "lemon";
+        public IncreasingFruitSpawner(float timeBetweenSpawns, Func<Fruit> createFruitFunction)
+            : base(timeBetweenSpawns, createFruitFunction)
+        {
+            
+        }
     }
 }

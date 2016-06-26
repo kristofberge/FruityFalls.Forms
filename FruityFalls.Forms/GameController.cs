@@ -25,28 +25,16 @@ namespace FruityFalls.Forms
 
     public static class GameController
     {
-        public static void InitializeGame(CCGameView gameView)
-        {
-            Initialize(gameView);
-            var gameScene = new  GameScene(gameView);
-            gameView.RunWithScene(gameScene);
-        }
 
-        public static void InitializeTitle(CCGameView gameView)
-        {
-            Initialize(gameView);
-            var titleScene = new TitleScene(gameView);
-            gameView.RunWithScene(titleScene);
-        }
-
-        public static void Initialize(CCGameView gameView)
+        public static T Initialize<T>(CCGameView gameView, Func<CCGameView, T> sceneCreator) where T : CCScene
         {
             gameView.ContentManager.SearchPaths = new List<string> { "Images" };
-
             gameView.DesignResolution = new CCSizeI(Constants.DESIGN_WIDTH, Constants.DESIGN_HEIGHT);
 
+            T scene = sceneCreator(gameView);
+            gameView.RunWithScene(scene);
 
+            return scene;
         }
-
-   }
+    }
 }
